@@ -4,6 +4,11 @@
     value: '1'
     sysctl_set: true
 
+- sysctl:
+    name: net.ipv4.conf.all.send_redirects
+    value: '0'
+    sysctl_set: true
+
 - name: Accept packets from VPN tunnel adaptor - ufw
   ufw:
     comment: Created by Ansible

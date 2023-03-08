@@ -4,6 +4,11 @@
     value: '1'
     sysctl_set: true
 
+- sysctl:
+    name: net.ipv4.conf.all.send_redirects
+    value: '0'
+    sysctl_set: true
+
 - name: Set default interface to external
   ansible.posix.firewalld:
     interface: "{{ ansible_default_ipv4.interface }}"
