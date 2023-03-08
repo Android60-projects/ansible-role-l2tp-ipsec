@@ -9,19 +9,23 @@
     value: '0'
     sysctl_set: true
 
-- name: Accept packets from VPN tunnel adaptor - ufw
-  ufw:
-    comment: Created by Ansible
-    direction: in
-    interface: tun0
-    rule: allow
-
 - ufw:
     rule: allow
     route: true
     comment: Created by Ansible
     src: 10.10.10.0/24
     dest: 0.0.0.0/0
+
+- name: Allow routing from private IPs
+  community.general.ufw:
+    rule: allow
+    route: true
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - {src: '10.0.0.0/8', dest: '0.0.0.0/0'}
+    - {src: '172.16.0.0/12', dest: '0.0.0.0/0'}
+    - {src: '192.168.0.0/16', dest: '0.0.0.0/0'}
 
 - name: Setup nat table rules with MASQUERADE - ufw
   blockinfile:
