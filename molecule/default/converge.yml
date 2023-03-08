@@ -3,6 +3,13 @@
   hosts: all
 
   tasks:
+    - name: Create kernel modules directory (Debian)
+      when: ansible_os_family == 'Debian'
+      file:
+        path: /lib/modules
+        state: directory
+        mode: '0751'
+
     - name: Create symlink for host's kernel modules
       tags: molecule-idempotence-notest
       shell: ln -s /host/lib/modules/$(uname -r) /lib/modules/$(uname -r)
