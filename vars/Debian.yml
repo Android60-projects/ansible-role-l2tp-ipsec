@@ -1,0 +1,5 @@
+---
+openvpn_server_user: "nobody"
+openvpn_server_group: "nogroup"
+ipsec_package_name: "ipsec"
+ipsec_config_location: "/etc/ipsec.conf"

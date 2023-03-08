@@ -1,0 +1,24 @@
+---
+- name: Verify
+  hosts: all
+  vars_files:
+    - ../../vars/main.yml
+
+  tasks:
+    - name: Verify that ipsec is running
+      systemd:
+        name: ipsec.service
+        enabled: true
+        state: started
+      check_mode: true
+      register: ipsec_service
+      failed_when: ipsec_service is changed
+
+    - name: Verify that xl2tpd is running
+      systemd:
+        name: xl2tpd.service
+        enabled: true
+        state: started
+      check_mode: true
+      register: xl2tpd_service
+      failed_when: xl2tpd_service is changed

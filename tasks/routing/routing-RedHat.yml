@@ -1,0 +1,64 @@
+---
+- sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: true
+
+- name: Set default interface to external
+  ansible.posix.firewalld:
+    interface: "{{ ansible_default_ipv4.interface }}"
+    zone: "{{ firewalld_default_interface_zone }}"
+    permanent: true
+    immediate: true
+    state: enabled
+
+- name: Disable AllowZoneDrifting in firewalld config
+  lineinfile:
+    dest: /etc/firewalld/firewalld.conf
+    regexp: '^AllowZoneDrifting'
+    line: 'AllowZoneDrifting=no'
+    state: present
+
+- name: Configure open ports with firewalld.
+  notify:
+    - restart firewalld
+  firewalld:
+    state: "{{ item.state }}"
+    port: "{{ item.port }}"
+    zone: "{{ firewalld_default_interface_zone }}"
+    immediate: true
+    permanent: true
+  with_items:
+    - {state: 'enabled', port: '22/tcp'}
+    - {state: 'enabled', port: '500/udp'}
+    - {state: 'enabled', port: '4500/udp'}
+    - {state: 'enabled', port: '1701/udp'}
+
+- name: Accept esp protocol.
+  notify:
+    - restart firewalld
+  firewalld:
+    state: enabled
+    rich_rule: rule protocol value="esp" accept
+    immediate: true
+    permanent: true
+
+- name: Accept ah protocol.
+  notify:
+    - restart firewalld
+  firewalld:
+    state: enabled
+    rich_rule: rule protocol value="ah" accept
+    immediate: true
+    permanent: true
+
+- name: Enable masquerading on external zone
+  ansible.posix.firewalld:
+    masquerade: true
+    zone: "{{ firewalld_default_interface_zone }}"
+    permanent: true
+    state: enabled
+    # Workaround ansible issue: https://github.com/ansible/ansible/pull/21693
+    # immediate: true
+  notify:
+    - restart firewalld

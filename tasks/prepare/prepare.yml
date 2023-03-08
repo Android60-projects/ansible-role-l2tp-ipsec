@@ -1,0 +1,107 @@
+---
+- name: Install xl2tpd and strongswan
+  package:
+    name:
+      - xl2tpd
+      - libreswan
+    state: present
+
+- name: check if blacklist file exists
+  stat:
+    path: /etc/modprobe.d/l2tp_netlink-blacklist.conf
+  register: l2tp_netlink_blacklist
+
+- name: check if blacklist file exists
+  stat:
+    path: /etc/modprobe.d/l2tp_ppp-blacklist.conf
+  register: l2tp_ppp_blacklist
+
+- name: Disable l2tp_netlink kernel module blocklist
+  when: l2tp_netlink_blacklist.stat.exists == True
+  lineinfile:
+    dest: /etc/modprobe.d/l2tp_netlink-blacklist.conf
+    regexp: "^blacklist l2tp_netlink"
+    line: "#blacklist l2tp_netlink"
+    state: present
+  notify:
+    - reboot system
+
+- name: Disable l2tp_ppp kernel module blocklist
+  when: l2tp_ppp_blacklist.stat.exists == True
+  lineinfile:
+    dest: /etc/modprobe.d/l2tp_ppp-blacklist.conf
+    regexp: "^blacklist l2tp_ppp"
+    line: "#blacklist l2tp_ppp"
+    state: present
+  notify:
+    - reboot system
+
+- name: Reboot is needed to load kernel modules
+  meta: flush_handlers
+
+- name: Place /etc/ipsec.conf
+  notify: restart ipsec
+  ansible.builtin.template:
+    src: ipsec.conf.j2
+    dest: "{{ ipsec_config_location }}"
+    owner: root
+    group: root
+    mode: "0640"
+
+# - name: Place strongswan config
+#   ansible.builtin.template:
+#     src: swanctl.conf.j2
+#     dest: "{{ swanctl_config_location }}"
+#     owner: root
+#     group: root
+#     mode: "0640"
+#   notify:
+#     - restart ipsec
+
+- name: Place /etc/ppp/chap-secrets
+  ansible.builtin.template:
+    src: chap-secrets.j2
+    dest: "/etc/ppp/chap-secrets"
+    owner: root
+    group: root
+    mode: "0640"
+
+- name: Place /etc/ppp/options.xl2tpd
+  ansible.builtin.template:
+    src: options.xl2tpd.j2
+    dest: "/etc/ppp/options.xl2tpd"
+    owner: root
+    group: root
+    mode: "0640"
+
+- name: Place /etc/xl2tpd/xl2tpd.conf
+  ansible.builtin.template:
+    src: xl2tpd.conf.j2
+    dest: "/etc/xl2tpd/xl2tpd.conf"
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - restart xl2tpd
+
+- name: Place /etc/ipsec.secrets
+  ansible.builtin.template:
+    src: ipsec.secrets.j2
+    dest: "/etc/ipsec.secrets"
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - restart ipsec
+
+- name: Ensure ipsec is started and enabled
+  service:
+    name: "{{ ipsec_package_name }}"
+    state: started
+    enabled: true
+
+- name: Ensure xl2tpd is started and enabled
+  service:
+    name: xl2tpd
+    state: started
+    enabled: true
