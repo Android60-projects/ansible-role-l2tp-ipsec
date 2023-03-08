@@ -27,6 +27,12 @@
         group: root
         state: link
 
+    - name: Add af_key module for ipsec.service (Debian)
+      when: ansible_os_family == 'Debian'
+      community.general.modprobe:
+        name: af_key
+        state: present
+
     - name: Install openssh-server (on RedHat).
       package:
         name: openssh-server
