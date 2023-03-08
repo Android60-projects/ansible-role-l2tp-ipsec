@@ -3,14 +3,14 @@
   hosts: all
 
   tasks:
-    - name: Create /var/run/sshd (Debian)
-      when: ansible_os_family == 'Debian'
-      file:
-        path: /var/run/sshd
-        state: directory
-        owner: root
-        group: root
-        mode: '0751'
+    # - name: Create /var/run/sshd (Debian)
+    #   when: ansible_os_family == 'Debian'
+    #   file:
+    #     path: /var/run/sshd
+    #     state: directory
+    #     owner: root
+    #     group: root
+    #     mode: '0751'
 
     - name: Create kernel modules directory (Debian)
       when: ansible_os_family == 'Debian'
@@ -27,12 +27,6 @@
         group: root
         state: link
 
-    - name: Update apt cache (on Debian).
-      apt:
-        update_cache: true
-        cache_valid_time: 3600
-      when: ansible_os_family == 'Debian'
-
     - name: Install openssh-server (on RedHat).
       package:
         name: openssh-server
@@ -45,11 +39,27 @@
         state: present
       when: ansible_os_family == 'RedHat'
 
-    - name: Install openssh-server (on Debian).
+    - name: Install required packages (on Debian).
       apt:
-        name: openssh-server
+        name:
+          - openssh-server
+          - rsyslog
+          - ufw
         state: present
       when: ansible_os_family == 'Debian'
+
+    - name: Create /var/run/sshd
+      when: ansible_os_family == 'Debian'
+      ansible.builtin.file:
+        path: /var/run/sshd
+        state: directory
+
+    - name: Create /var/log/auth.log
+      when: ansible_os_family == 'Debian'
+      tags: molecule-idempotence-notest
+      ansible.builtin.file:
+        path: /var/log/auth.log
+        state: touch
 
     - name: Generate SSH keys
       tags: molecule-idempotence-notest
