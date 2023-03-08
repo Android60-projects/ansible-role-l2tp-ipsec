@@ -12,6 +12,7 @@
   notify: restart ssh
 
 - name: Install extra kernel modules.
+  tags: notest
   apt:
     name: linux-generic
     update_cache: true
