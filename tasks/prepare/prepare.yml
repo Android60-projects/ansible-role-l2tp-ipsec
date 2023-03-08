@@ -1,5 +1,8 @@
 ---
 - name: Install xl2tpd and strongswan
+  tags: notest
+  notify:
+    - reboot system
   package:
     name:
       - xl2tpd

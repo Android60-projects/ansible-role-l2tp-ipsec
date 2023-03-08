@@ -23,7 +23,8 @@ conn L2TP-PSK
         ikev2=never
         left={{ public_ip }}
         leftid={{ public_ip }}
-        leftprotoport=udp/l2tp
+        leftprotoport=17/1701
+        rightprotoport=17/%any
         #leftid=@vpn.example.com
         right=%any
         #rightprotoport=udp/%any
