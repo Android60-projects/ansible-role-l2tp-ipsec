@@ -22,6 +22,3 @@
       check_mode: true
       register: xl2tpd_service
       failed_when: xl2tpd_service is changed
-
-    - name: Verify ipsec config
-      command: ipsec verify

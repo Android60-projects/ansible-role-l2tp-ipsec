@@ -108,3 +108,7 @@
     name: xl2tpd
     state: started
     enabled: true
+
+- name: Verify ipsec config
+  tags: notest
+  command: ipsec verify
