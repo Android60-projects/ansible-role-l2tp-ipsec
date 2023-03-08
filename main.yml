@@ -8,6 +8,7 @@
 
   handlers:
     - name: reboot system
+      tags: notest
       reboot:
         msg: "Reboot initiated by Ansible to load new kernel modules"
 
