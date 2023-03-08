@@ -17,6 +17,7 @@
   register: l2tp_ppp_blacklist
 
 - name: Disable l2tp_netlink kernel module blocklist
+  tags: notest
   when: l2tp_netlink_blacklist.stat.exists == True
   lineinfile:
     dest: /etc/modprobe.d/l2tp_netlink-blacklist.conf
@@ -27,6 +28,7 @@
     - reboot system
 
 - name: Disable l2tp_ppp kernel module blocklist
+  tags: notest
   when: l2tp_ppp_blacklist.stat.exists == True
   lineinfile:
     dest: /etc/modprobe.d/l2tp_ppp-blacklist.conf
@@ -37,6 +39,7 @@
     - reboot system
 
 - name: Reboot is needed to load kernel modules
+  tags: notest
   meta: flush_handlers
 
 - name: Place /etc/ipsec.conf
