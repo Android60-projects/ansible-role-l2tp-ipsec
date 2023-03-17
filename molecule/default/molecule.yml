@@ -12,7 +12,7 @@ driver:
     type: virtualbox
 
 platforms:
-  - name: test-wg-ubuntu2004
+  - name: test-wg-${MOLECULE_DISTRO:-ubuntu2004}
     box: geerlingguy/${MOLECULE_DISTRO:-ubuntu2004}
     memory: 1024
     cpus: 1
