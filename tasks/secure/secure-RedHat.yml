@@ -51,6 +51,7 @@
   service:
     name: firewalld
     state: started
+    enabled: true
 
 # - name: Amazon Linux 2 fix (use python2)
 #   include_vars:
