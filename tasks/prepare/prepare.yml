@@ -109,5 +109,5 @@
     enabled: true
 
 - name: Verify ipsec config
-  tags: molecule-idempotence-notest.
+  tags: molecule-idempotence-notest
   command: ipsec verify
