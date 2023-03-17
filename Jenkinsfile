@@ -18,7 +18,7 @@ pipeline {
                     agent { label 'molecule-virtualbox' }
                     steps {
                         script {
-                            sh "MOLECULE_DISTRO=ubuntu2004 molecule test --parallel"
+                            sh "MOLECULE_DISTRO=ubuntu2004 molecule test"
                         }
                     }
 
@@ -35,7 +35,7 @@ pipeline {
                     agent { label 'molecule-virtualbox' }
                     steps {
                         script {
-                            sh "MOLECULE_DISTRO=rockylinux8 molecule test --parallel"
+                            sh "MOLECULE_DISTRO=rockylinux8 molecule test"
                         }
                     }
 
@@ -57,7 +57,7 @@ pipeline {
                     agent { label 'molecule-virtualbox' }
                     steps {
                         script {
-                            sh "MOLECULE_DISTRO=debian11 molecule test --parallel"
+                            sh "MOLECULE_DISTRO=debian11 molecule test"
                         }
                     }
 
@@ -74,7 +74,7 @@ pipeline {
                     agent { label 'molecule-virtualbox' }
                     steps {
                         script {
-                            sh "MOLECULE_DISTRO=ubuntu1804 molecule test --parallel"
+                            sh "MOLECULE_DISTRO=ubuntu1804 molecule test"
                         }
                     }
 
