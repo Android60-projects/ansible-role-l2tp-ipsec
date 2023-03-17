@@ -94,7 +94,6 @@
     state: present
 
 - name: Ensure SELinux is enabled in `targeted` mode.
-  tags: notest
   selinux:
     policy: targeted
     state: enforcing

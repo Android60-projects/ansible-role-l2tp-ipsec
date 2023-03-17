@@ -1,7 +1,7 @@
 pipeline {
     agent {
         node {
-            label 'molecule-test'
+            label 'molecule-virtualbox'
         }
     }
     options {
@@ -14,25 +14,25 @@ pipeline {
     stages {
         stage('Test RedHat-like') {
             parallel {
-                stage('Test CentOS 8'){
-                    agent { label 'molecule-test' }
+                stage('Test Ubuntu 20.04'){
+                    agent { label 'molecule-virtualbox' }
                     steps {
                         script {
-                            sh "MOLECULE_DISTRO=centos8 molecule test --parallel"
+                            sh "MOLECULE_DISTRO=ubuntu2004 molecule test --parallel"
                         }
                     }
 
                 post {
                     success {
-                        updateGitlabCommitStatus name: 'Test CentOS 8', state: 'success'
+                        updateGitlabCommitStatus name: 'Test Ubuntu 20.04', state: 'success'
                     }
                     failure {
-                        updateGitlabCommitStatus name: 'Test CentOS 8', state: 'failed'
+                        updateGitlabCommitStatus name: 'Test Ubuntu 20.04', state: 'failed'
                     }
                 } 
                 }
                 stage('Test Rocky Linux 8'){
-                    agent { label 'molecule-test' }
+                    agent { label 'molecule-virtualbox' }
                     steps {
                         script {
                             sh "MOLECULE_DISTRO=rockylinux8 molecule test --parallel"
@@ -53,37 +53,37 @@ pipeline {
         
         stage('Test Debian-like') {
             parallel {
-                stage('Test Debian 10'){
-                    agent { label 'molecule-test' }
+                stage('Test Debian 11'){
+                    agent { label 'molecule-virtualbox' }
                     steps {
                         script {
-                            sh "MOLECULE_DISTRO=debian10 molecule test --parallel"
+                            sh "MOLECULE_DISTRO=debian11 molecule test --parallel"
                         }
                     }
 
                     post {
                         success {
-                            updateGitlabCommitStatus name: 'Test Debian 10', state: 'success'
+                            updateGitlabCommitStatus name: 'Test Debian 11', state: 'success'
                         }
                         failure {
-                            updateGitlabCommitStatus name: 'Test Debian 10', state: 'failed'
+                            updateGitlabCommitStatus name: 'Test Debian 11', state: 'failed'
                         }
                     } 
                 }
-                stage('Test Ubuntu 22.04'){
-                    agent { label 'molecule-test' }
+                stage('Test Ubuntu 18.04'){
+                    agent { label 'molecule-virtualbox' }
                     steps {
                         script {
-                            sh "MOLECULE_DISTRO=ubuntu2204 molecule test --parallel"
+                            sh "MOLECULE_DISTRO=ubuntu1804 molecule test --parallel"
                         }
                     }
 
                     post {
                         success {
-                            updateGitlabCommitStatus name: 'Test Ubuntu 22.04', state: 'success'
+                            updateGitlabCommitStatus name: 'Test Ubuntu 18.04', state: 'success'
                         }
                         failure {
-                            updateGitlabCommitStatus name: 'Test Ubuntu 22.04', state: 'failed'
+                            updateGitlabCommitStatus name: 'Test Ubuntu 18.04', state: 'failed'
                         }
                     }
                 }
