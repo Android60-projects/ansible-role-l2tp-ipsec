@@ -11,7 +11,8 @@
       line: "PasswordAuthentication no"
   notify: restart ssh
 
-- name: Install extra kernel modules.
+- name: Install extra kernel modules. (Ubuntu)
+  when: ansible_distribution == 'Ubuntu'
   apt:
     name: linux-generic
     update_cache: true
@@ -22,7 +23,6 @@
   apt:
     update_cache: true
     upgrade: true
-    cache_valid_time: 86400
 
 # User account configuration.
 - name: Add a deployment user.
