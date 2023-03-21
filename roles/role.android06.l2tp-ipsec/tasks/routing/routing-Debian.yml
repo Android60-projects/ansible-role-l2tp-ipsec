@@ -11,6 +11,35 @@
     - {parameter: 'net.ipv4.conf.all.rp_filter', value: '0'}
     - {parameter: 'net.ipv4.conf.default.rp_filter', value: '0'}
 
+- name: Open ports for L2TP ipsec
+  ufw:
+    rule: allow
+    direction: in
+    proto: "{{ item.proto }}"
+    port: "{{ item.port }}"
+    comment: Created by Ansible
+    state: enabled
+    delete: false
+  with_items:
+    - {port: '22', proto: 'tcp'}
+    - {port: '500', proto: 'udp'}
+    - {port: '4500', proto: 'udp'}
+    - {port: '1701', proto: 'udp'}
+  notify: reload ufw
+
+- name: Open esp and ah ports
+  ufw:
+    rule: allow
+    direction: in
+    proto: "{{ item.proto }}"
+    comment: Created by Ansible
+    state: enabled
+    delete: false
+  with_items:
+    - {proto: 'esp'}
+    - {proto: 'ah'}
+  notify: reload ufw
+
 - ufw:
     rule: allow
     route: true
