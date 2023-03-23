@@ -71,7 +71,7 @@
     dest: "/etc/ppp/chap-secrets"
     owner: root
     group: root
-    mode: "0640"
+    mode: "0600"
 
 - name: Place /etc/ppp/options.xl2tpd
   ansible.builtin.template:
@@ -97,7 +97,7 @@
     dest: "/etc/ipsec.secrets"
     owner: root
     group: root
-    mode: "0640"
+    mode: "0600"
   notify:
     - restart ipsec
 
