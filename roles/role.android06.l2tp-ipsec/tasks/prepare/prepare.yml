@@ -114,6 +114,10 @@
     state: started
     enabled: true
 
+- name: Pause for 5 seconds (Services starting)
+  ansible.builtin.pause:
+    seconds: 5
+
 - name: Verify ipsec config
   tags: molecule-idempotence-notest
   command: ipsec verify
