@@ -13,16 +13,22 @@
       - xl2tpd
       - libreswan
     state: present
+  tags:
+    - l2tp-config
 
 - name: check if blacklist file exists
   stat:
     path: /etc/modprobe.d/l2tp_netlink-blacklist.conf
   register: l2tp_netlink_blacklist
+  tags:
+    - l2tp-config
 
 - name: check if blacklist file exists
   stat:
     path: /etc/modprobe.d/l2tp_ppp-blacklist.conf
   register: l2tp_ppp_blacklist
+  tags:
+    - l2tp-config
 
 - name: Disable l2tp_netlink kernel module blocklist
   when: l2tp_netlink_blacklist.stat.exists == True
@@ -33,6 +39,8 @@
     state: present
   notify:
     - reboot system
+  tags:
+    - l2tp-config
 
 - name: Disable l2tp_ppp kernel module blocklist
   when: l2tp_ppp_blacklist.stat.exists == True
@@ -43,9 +51,13 @@
     state: present
   notify:
     - reboot system
+  tags:
+    - l2tp-config
 
 - name: Reboot is needed to load kernel modules
   meta: flush_handlers
+  tags:
+    - l2tp-config
 
 - name: Place /etc/ipsec.conf
   notify: restart ipsec
@@ -55,6 +67,8 @@
     owner: root
     group: root
     mode: "0640"
+  tags:
+    - l2tp-config
 
 # - name: Place strongswan config
 #   ansible.builtin.template:
@@ -73,6 +87,8 @@
     owner: root
     group: root
     mode: "0600"
+  tags:
+    - l2tp-auth-config
 
 - name: Place /etc/ppp/options.xl2tpd
   ansible.builtin.template:
@@ -81,6 +97,8 @@
     owner: root
     group: root
     mode: "0640"
+  tags:
+    - l2tp-auth-config
 
 - name: Place /etc/xl2tpd/xl2tpd.conf
   ansible.builtin.template:
@@ -101,23 +119,33 @@
     mode: "0600"
   notify:
     - restart ipsec
+  tags:
+    - l2tp-auth-config
 
 - name: Ensure ipsec is started and enabled
   service:
     name: "{{ ipsec_package_name }}"
     state: started
     enabled: true
+  tags:
+    - l2tp-config
 
 - name: Ensure xl2tpd is started and enabled
   service:
     name: xl2tpd
     state: started
     enabled: true
+  tags:
+    - l2tp-config
 
 - name: Pause for 5 seconds (Services starting)
   ansible.builtin.pause:
     seconds: 5
+  tags:
+    - l2tp-config
 
 - name: Verify ipsec config
-  tags: molecule-idempotence-notest
+  tags: 
+    - molecule-idempotence-notest
+    - l2tp-config
   command: ipsec verify

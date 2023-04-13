@@ -9,6 +9,8 @@
     - {parameter: 'net.ipv4.conf.all.send_redirects', value: '0'}
     - {parameter: 'net.ipv4.conf.default.send_redirects', value: '0'}
     - {parameter: 'net.ipv4.conf.all.rp_filter', value: '0'}
+  tags:
+    - routing-config
 
 - name: Set default interface to external
   ansible.posix.firewalld:
@@ -17,6 +19,8 @@
     permanent: true
     immediate: true
     state: enabled
+  tags:
+    - routing-config
 
 - name: Disable AllowZoneDrifting in firewalld config
   lineinfile:
@@ -24,6 +28,8 @@
     regexp: '^AllowZoneDrifting'
     line: 'AllowZoneDrifting=no'
     state: present
+  tags:
+    - routing-config
 
 - name: Configure open ports with firewalld.
   notify:
@@ -39,6 +45,8 @@
     - {state: 'enabled', port: '500/udp'}
     - {state: 'enabled', port: '4500/udp'}
     - {state: 'enabled', port: '1701/udp'}
+  tags:
+    - routing-config
 
 - name: Accept esp protocol.
   notify:
@@ -48,6 +56,8 @@
     rich_rule: rule protocol value="esp" accept
     immediate: true
     permanent: true
+  tags:
+    - routing-config
 
 - name: Accept ah protocol.
   notify:
@@ -57,6 +67,8 @@
     rich_rule: rule protocol value="ah" accept
     immediate: true
     permanent: true
+  tags:
+    - routing-config
 
 - name: Enable masquerading on external zone
   ansible.posix.firewalld:
@@ -68,3 +80,5 @@
     # immediate: true
   notify:
     - restart firewalld
+  tags:
+    - routing-config

@@ -10,6 +10,8 @@
     - {parameter: 'net.ipv4.conf.default.send_redirects', value: '0'}
     - {parameter: 'net.ipv4.conf.all.rp_filter', value: '0'}
     - {parameter: 'net.ipv4.conf.default.rp_filter', value: '0'}
+  tags:
+    - routing-config
 
 - name: Open ports for L2TP ipsec
   ufw:
@@ -26,6 +28,8 @@
     - {port: '4500', proto: 'udp'}
     - {port: '1701', proto: 'udp'}
   notify: reload ufw
+  tags:
+    - routing-config
 
 - name: Open esp and ah ports
   ufw:
@@ -39,6 +43,8 @@
     - {proto: 'esp'}
     - {proto: 'ah'}
   notify: reload ufw
+  tags:
+    - routing-config
 
 - ufw:
     rule: allow
@@ -46,6 +52,8 @@
     comment: Created by Ansible
     src: 10.10.10.0/24
     dest: 0.0.0.0/0
+  tags:
+    - routing-config
 
 - name: Allow routing from private IPs
   community.general.ufw:
@@ -57,6 +65,8 @@
     - {src: '10.0.0.0/8', dest: '0.0.0.0/0'}
     - {src: '172.16.0.0/12', dest: '0.0.0.0/0'}
     - {src: '192.168.0.0/16', dest: '0.0.0.0/0'}
+  tags:
+    - routing-config
 
 - name: Setup nat table rules with MASQUERADE - ufw
   blockinfile:
@@ -74,3 +84,5 @@
       COMMIT
   notify:
     - reload ufw
+  tags:
+    - routing-config

@@ -2,7 +2,11 @@
 
 This directory contains playbooks used for installing L2TP IPsec server using xl2tpd and libreswan packages.
 
-Available variables:
+## Tags:
+- l2tp-config
+- l2tp-auth-config
+
+## Available variables:
 ```
 openvpn_port: "1194"
 openvpn_proto: "udp"
