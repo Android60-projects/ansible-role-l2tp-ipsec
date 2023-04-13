@@ -3,8 +3,10 @@
 This directory contains playbooks used for installing L2TP IPsec server using xl2tpd and libreswan packages.
 
 ## Tags:
+```
 - l2tp-config
 - l2tp-auth-config
+```
 
 ## Available variables:
 ```
