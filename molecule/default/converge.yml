@@ -2,6 +2,9 @@
 - name: Converge
   hosts: all
 
+  vars:
+    upgrade_packages: false
+
   tasks:
     - name: Update apt cache (on Debian).
       apt:
