@@ -2,7 +2,7 @@
 - name: Verify
   hosts: all
   vars_files:
-    - ../../roles/role.android06.l2tp-ipsec/vars/main.yml
+    - ../../vars/main.yml
 
   tasks:
     - name: Verify that ipsec is running
