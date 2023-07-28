@@ -1,0 +1,15 @@
+[global]
+auth file = /etc/ppp/chap-secrets
+
+[lns default]
+ip range = 10.10.10.9-10.10.10.254
+local ip = 10.10.10.1
+refuse chap = yes
+refuse pap = yes
+require authentication = yes
+ppp debug = no
+pppoptfile = /etc/ppp/options.xl2tpd
+length bit = yes
+exclusive = no
+assign ip = yes
+name = VPN-Server
