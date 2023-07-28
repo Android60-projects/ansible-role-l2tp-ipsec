@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+
+  tasks:
+    - include_role:
+        name: role.android06.security
+    - include_role:
+        name: role.android06.l2tp-ipsec
