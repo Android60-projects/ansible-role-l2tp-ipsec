@@ -2,7 +2,7 @@
 dependencies: []
 
 galaxy_info:
-  role_name: l2tp-ipsec
+  role_name: l2tp_ipsec
   author: android06
   description: "This role installs L2TP IPSec server"
   company: "Android06"
