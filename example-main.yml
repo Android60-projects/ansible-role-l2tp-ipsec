@@ -4,6 +4,6 @@
 
   tasks:
     - include_role:
-        name: role.android06.security
+        name: android06.security
     - include_role:
-        name: role.android06.l2tp-ipsec
+        name: l2tp_ipsec
