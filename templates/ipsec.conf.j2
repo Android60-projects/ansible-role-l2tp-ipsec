@@ -16,8 +16,8 @@ conn L2TP-PSK
         authby=secret
         pfs=no
         rekey=no
-        #ike=aes256-sha1-modp1024,aes128-sha1-modp1024,3des-sha1-modp1024
-        #esp=aes256-sha2_512,aes256-sha1,aes256-sha2_256,3des-sha1
+        ike=aes256-sha1-modp2048,aes128-sha1-modp2048,3des-sha1-modp2048
+        esp=aes256-sha2_512,aes256-sha1,aes256-sha2_256,3des-sha1
         keyingtries=3
         modecfgdns="8.8.8.8 8.8.4.4"
         ikev2=never
