@@ -18,18 +18,8 @@
 - name: restart firewalld
   command: firewall-cmd --reload
 
-- name: restart openvpn
-  service: name=openvpn state=restarted
-
 - name: restart ipsec
   service: name={{ ipsec_package_name }} state=restarted enabled=yes
 
 - name: restart xl2tpd
   service: name=xl2tpd state=restarted enabled=yes
-
-- name: restart ovpn-admin
-  systemd:
-    state: restarted
-    enabled: true
-    daemon_reload: true
-    name: ovpn-admin
