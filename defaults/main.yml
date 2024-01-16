@@ -1,0 +1,2 @@
+---
+ike: "aes256-sha1-modp2048,aes128-sha1-modp2048,3des-sha1-modp2048"
