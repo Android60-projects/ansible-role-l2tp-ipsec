@@ -112,19 +112,8 @@
 
 - name: Register if ipsec secrets file already exists on target host
   ansible.builtin.stat:
-    path: ipsec_secret_file_location
+    path: "{{ ipsec_secret_file_location }}"
   register: ipsec_secrets_register_file
-
-- debug:
-    msg: "ipsec_secrets_register_file.stat"
-
-- debug:
-    msg: "File {{ ipsec_secret_file_location }} exists"
-  when: ipsec_secrets_register_file.stat.exists
-
-- debug:
-    msg: "File {{ ipsec_secret_file_location }} not exists"
-  when: not ipsec_secrets_register_file.stat.exists
 
 - name: Handling for existing IPSec PSK
   tags:
@@ -144,8 +133,8 @@
       set_fact:
         default_ipsec_psk: "{{ gen_ipsec_psk.stdout }}"
 
-- debug:
-    msg: "Generated ipsec psk: {{ default_ipsec_psk }}"
+    - debug:
+        msg: "Generated ipsec psk: {{ default_ipsec_psk }}"
 
 - name: Place {{ ipsec_secret_file_location }}
   when:
