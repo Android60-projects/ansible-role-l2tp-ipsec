@@ -136,10 +136,14 @@
       set_fact:
         default_ipsec_psk: "{{ gen_ipsec_psk.stdout }}"
 
+- debug:
+    msg: "Generated ipsec psk: {{ default_ipsec_psk }}"
+
 - name: Place {{ ipsec_secret_file_location }}
   when:
     - not ipsec_secrets_register_file.stat.exists
     - configure_ipsec_secret
+    - default_ipsec_psk is defined
   ansible.builtin.template:
     src: ipsec.secrets.j2
     dest: "{{ ipsec_secret_file_location }}"
