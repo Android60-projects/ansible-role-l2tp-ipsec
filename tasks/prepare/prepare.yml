@@ -133,8 +133,8 @@
 
     - name: Set IPSec PSK fact
       notify: restart ipsec
-      register: default_ipsec_psk
-      command: openssl rand -hex 35
+      set_fact:
+        default_ipsec_psk: "{{ gen_ipsec_psk.stdout }}"
 
 - name: Place {{ ipsec_secret_file_location }}
   when:
