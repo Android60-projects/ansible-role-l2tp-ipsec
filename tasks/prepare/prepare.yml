@@ -110,17 +110,44 @@
   notify:
     - restart xl2tpd
 
-- name: Place /etc/ipsec.secrets
+- name: Register if ipsec secrets file already exists on target host
+  ansible.builtin.stat:
+    path: ipsec_secret_file_location
+  register: ipsec_secrets_register_file
+
+- debug:
+    msg: "Is {{ ipsec_secret_file_location }} exists? {{ ipsec_secrets_register_file.stat.exists }}"
+
+- name: Handling for existing IPSec PSK
+  tags:
+    - l2tp-auth-config
+  when: 
+    - default_ipsec_psk is not defined
+    - generate_ipsec_psk
+    - not ipsec_secrets_register_file.stat.exists
+  block:
+    - name: Generate IPSec PSK
+      notify: restart ipsec
+      register: gen_ipsec_psk
+      command: openssl rand -hex 35
+
+    - name: Set IPSec PSK fact
+      notify: restart ipsec
+      register: default_ipsec_psk
+      command: openssl rand -hex 35
+
+- name: Place {{ ipsec_secret_file_location }}
+  when:
+    - not ipsec_secrets_register_file.stat.exists
+    - configure_ipsec_secret
   ansible.builtin.template:
     src: ipsec.secrets.j2
-    dest: "/etc/ipsec.secrets"
+    dest: "{{ ipsec_secret_file_location }}"
     owner: root
     group: root
     mode: "0600"
   notify:
     - restart ipsec
-  tags:
-    - l2tp-auth-config
 
 - name: Ensure ipsec is started and enabled
   service:
