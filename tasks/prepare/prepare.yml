@@ -116,7 +116,15 @@
   register: ipsec_secrets_register_file
 
 - debug:
-    msg: "Is {{ ipsec_secret_file_location }} exists? {{ ipsec_secrets_register_file.stat.exists }}"
+    msg: "ipsec_secrets_register_file.stat"
+
+- debug:
+    msg: "File {{ ipsec_secret_file_location }} exists"
+  when: ipsec_secrets_register_file.stat.exists
+
+- debug:
+    msg: "File {{ ipsec_secret_file_location }} not exists"
+  when: not ipsec_secrets_register_file.stat.exists
 
 - name: Handling for existing IPSec PSK
   tags:
