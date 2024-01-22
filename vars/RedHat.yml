@@ -2,3 +2,4 @@
 ipsec_package_name: "ipsec"
 ipsec_config_location: "/etc/ipsec.conf"
 swanctl_config_location: "/etc/strongswan/swanctl/swanctl.conf"
+ipsec_secret_file_location: "/etc/ipsec.secrets"

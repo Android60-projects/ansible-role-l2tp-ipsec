@@ -1,3 +1,4 @@
 ---
 ipsec_package_name: "ipsec"
 ipsec_config_location: "/etc/ipsec.conf"
+ipsec_secret_file_location: "/etc/ipsec.d/ipsec.secrets"
