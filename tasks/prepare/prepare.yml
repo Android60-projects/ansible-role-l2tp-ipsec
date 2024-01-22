@@ -126,15 +126,16 @@
     - name: Generate IPSec PSK
       notify: restart ipsec
       register: gen_ipsec_psk
-      command: openssl rand -hex 35
+      shell: cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 45 | head -n 1
 
     - name: Set IPSec PSK fact
       notify: restart ipsec
       set_fact:
         default_ipsec_psk: "{{ gen_ipsec_psk.stdout }}"
 
-    - debug:
-        msg: "Generated ipsec psk: {{ default_ipsec_psk }}"
+- debug:
+    msg: "Generated ipsec psk: {{ default_ipsec_psk }}"
+  when: default_ipsec_psk is defined
 
 - name: Place {{ ipsec_secret_file_location }}
   when:
