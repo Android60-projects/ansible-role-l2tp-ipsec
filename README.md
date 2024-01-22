@@ -16,4 +16,6 @@ ansible-galaxy install git+https://gitlab.myhomelab.xyz/ansible-roles/l2tp-ipsec
 ## Available variables:
 ```
 firewalld_default_interface_zone: "public"
+generate_ipsec_psk: true # Generate new ipsec psk key
+configure_ipsec_secret: true # Overwrite ipsec.secret file
 ```
