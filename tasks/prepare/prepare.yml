@@ -6,8 +6,6 @@
     update_cache: true
 
 - name: Install xl2tpd and strongswan
-  notify:
-    - reboot system
   package:
     name:
       - xl2tpd
