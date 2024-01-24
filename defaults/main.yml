@@ -4,3 +4,5 @@ esp: "aes256-sha2_512,aes256-sha1,aes256-sha2_256,3des-sha1"
 dns: "8.8.8.8 8.8.4.4"
 generate_ipsec_psk: true
 configure_ipsec_secret: true
+xl2tpd_ip_range: "10.10.10.9-10.10.10.254"
+xl2tpd_local_ip: "10.10.10.1"

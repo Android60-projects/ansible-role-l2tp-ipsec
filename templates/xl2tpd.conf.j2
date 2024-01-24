@@ -2,8 +2,8 @@
 auth file = /etc/ppp/chap-secrets
 
 [lns default]
-ip range = 10.10.10.9-10.10.10.254
-local ip = 10.10.10.1
+ip range = {{ xl2tpd_ip_range }}
+local ip = {{ xl2tpd_local_ip }}
 refuse chap = yes
 refuse pap = yes
 require authentication = yes
