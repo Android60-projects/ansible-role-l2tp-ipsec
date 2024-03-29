@@ -68,16 +68,6 @@
   tags:
     - l2tp-config
 
-# - name: Place strongswan config
-#   ansible.builtin.template:
-#     src: swanctl.conf.j2
-#     dest: "{{ swanctl_config_location }}"
-#     owner: root
-#     group: root
-#     mode: "0640"
-#   notify:
-#     - restart ipsec
-
 - name: Place /etc/ppp/chap-secrets
   ansible.builtin.template:
     src: chap-secrets.j2
