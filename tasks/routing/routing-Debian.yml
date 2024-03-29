@@ -10,6 +10,7 @@
     - {parameter: 'net.ipv4.conf.default.send_redirects', value: '0'}
     - {parameter: 'net.ipv4.conf.all.rp_filter', value: '0'}
     - {parameter: 'net.ipv4.conf.default.rp_filter', value: '0'}
+    - {parameter: 'net.ipv4.conf.enp0s3.rp_filter', value: '0'}
   tags:
     - routing-config
 
