@@ -5,7 +5,7 @@
   apt:
     update_cache: true
 
-- name: Install xl2tpd and strongswan
+- name: Install xl2tpd and libreswan
   package:
     name:
       - xl2tpd
