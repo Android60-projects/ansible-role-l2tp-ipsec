@@ -1,5 +1,7 @@
 # L2TP IPsec Ansible
 
+[![Molecule test](https://github.com/Android60-projects/ansible-role-l2tp-ipsec/actions/workflows/molecule.yml/badge.svg?branch=main)](https://github.com/Android60-projects/ansible-role-l2tp-ipsec/actions/workflows/molecule.yml)
+
 This directory contains playbooks used for installing L2TP IPsec server using xl2tpd and libreswan packages.
 
 ## Install role:
