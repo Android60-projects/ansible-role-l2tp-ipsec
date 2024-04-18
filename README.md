@@ -6,7 +6,7 @@ This directory contains playbooks used for installing L2TP IPsec server using xl
 
 ## Install role:
 ```
-ansible-galaxy install git+https://gitlab.myhomelab.xyz/ansible-roles/l2tp-ipsec-ansible.git,,android06.l2tp_ipsec
+ansible-galaxy install git+https://github.com/Android60-projects/ansible-role-l2tp-ipsec,,android06.l2tp_ipsec
 ```
 
 ## Tags:
